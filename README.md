@@ -6,7 +6,7 @@
 
 <hr>
 
-<h3><i>MIS Executive &amp; Data Analytics</i></h3>
+<h3><i>Passionate MIS Executive &amp; Data Analytics Enthusiast</i></h3>
 
 <hr>
 
@@ -104,15 +104,18 @@
 
 <h3 align="center">🐍 Contribution Snake</h3>
 
-<p align="center"><i>My GitHub contributions, eaten by a snake</i></p>
+<p align="center"><i>Watch the snake eat my contributions, or play it yourself</i></p>
 
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake.svg">
-  <img alt="Contribution snake animation" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake.svg">
-</picture>
+<img alt="Contribution snake animation" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake-dark.svg#gh-dark-mode-only" />
+<img alt="Contribution snake animation" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake.svg#gh-light-mode-only" />
 </div>
+
+<p align="center">
+<a href="https://rahul-dataanalyst153.github.io/Rahul-DataAnalyst153/" target="_blank"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY-SNAKE%20GAME-39d353?style=for-the-badge&labelColor=0D1117" alt="Play Snake Game" /></a>
+</p>
+
+<p align="center"><sub>Arrow keys / WASD · eat the green · grow longer · beat your best score</sub></p>
 
 <br>
 
