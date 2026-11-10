@@ -6,7 +6,7 @@
 
 <hr>
 
-<h3><i>Passionate MIS Executive &amp; Data Analytics Enthusiast</i></h3>
+<h3><i>MIS Executive &amp; Data Analytics</i></h3>
 
 <hr>
 
