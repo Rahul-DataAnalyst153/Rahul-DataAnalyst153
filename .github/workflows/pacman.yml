@@ -1,8 +1,8 @@
-name: generate arcade contribution graphs
+name: generate snake and live stats
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 */3 * * *"
   workflow_dispatch:
   push:
     branches:
@@ -16,12 +16,134 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: generate contribution graph SVGs
-        uses: abozanona/pacman-contribution-graph@main
+      - name: generate contribution snake SVGs
+        uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          games: "pacman,galaga,breakout"
-          hide_month_labels: "false"
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+
+      - name: generate animated GitHub stats card
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: |
+          mkdir -p dist
+          python3 - <<'PY'
+          import os, json, html, datetime, urllib.request
+
+          USER = os.environ.get("GH_USER") or os.environ.get("GITHUB_REPOSITORY_OWNER")
+          TOKEN = os.environ.get("GH_TOKEN", "")
+
+
+          def api(path, default=None):
+              headers = {"Accept": "application/vnd.github+json", "User-Agent": "profile-stats-card"}
+              if TOKEN:
+                  headers["Authorization"] = "Bearer " + TOKEN
+              try:
+                  req = urllib.request.Request("https://api.github.com" + path, headers=headers)
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return json.load(r)
+              except Exception as e:
+                  print("API error", path, e)
+                  return default
+
+
+          user = api("/users/" + USER, {}) or {}
+          repos, page = [], 1
+          while page <= 5:
+              chunk = api("/users/%s/repos?per_page=100&page=%d" % (USER, page), []) or []
+              repos += chunk
+              if len(chunk) < 100:
+                  break
+              page += 1
+          own = [r for r in repos if not r.get("fork")]
+
+          n_repos = user.get("public_repos", len(repos))
+          followers = user.get("followers", 0)
+          stars = sum(r.get("stargazers_count", 0) for r in own)
+          commits = (api("/search/commits?q=author:%s&per_page=1" % USER, {}) or {}).get("total_count", 0)
+          prs = (api("/search/issues?q=author:%s+type:pr&per_page=1" % USER, {}) or {}).get("total_count", 0)
+          issues = (api("/search/issues?q=author:%s+type:issue&per_page=1" % USER, {}) or {}).get("total_count", 0)
+
+          langs = {}
+          for r in own[:40]:
+              data = api("/repos/%s/%s/languages" % (USER, r["name"]), {}) or {}
+              for k, v in data.items():
+                  langs[k] = langs.get(k, 0) + v
+          total = sum(langs.values())
+          top = sorted(langs.items(), key=lambda kv: kv[1], reverse=True)[:5]
+
+          COLORS = {"Python": "#3572A5", "JavaScript": "#f1e05a", "HTML": "#e34c26", "CSS": "#8957e5",
+                    "Jupyter Notebook": "#DA5B0B", "TypeScript": "#3178c6", "Shell": "#89e051",
+                    "Java": "#b07219", "C": "#8b949e", "C++": "#f34b7d", "PLpgSQL": "#336790",
+                    "TSQL": "#e38c00", "VBA": "#867db1", "Batchfile": "#C1F12E", "Dockerfile": "#384d54"}
+          FALLBACK = ["#00B4D8", "#58a6ff", "#3fb950", "#bc8cff", "#e3b341"]
+
+          W, H = 820, 334
+          FONT = "'Segoe UI',Ubuntu,Arial,sans-serif"
+          now = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y, %H:%M UTC")
+          o = []
+          o.append('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" font-family="%s">' % (W, H, W, H, FONT))
+          o.append('<defs><linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#00B4D8" stop-opacity="0"/><stop offset=".5" stop-color="#00B4D8"/><stop offset="1" stop-color="#00B4D8" stop-opacity="0"/>'
+                   '<animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs>')
+          o.append('<rect x=".5" y=".5" width="%d" height="%d" rx="14" fill="#0d1117" stroke="#30363d"/>' % (W - 1, H - 1))
+          o.append('<text x="32" y="46" font-size="22" font-weight="700" fill="#00B4D8">GitHub Analytics</text>')
+          o.append('<text x="32" y="68" font-size="13" fill="#8b949e">@%s · updated %s</text>' % (html.escape(USER), now))
+          o.append('<rect x="32" y="80" width="756" height="2" fill="url(#shine)"/>')
+
+
+          def fade(delay, dur=0.6, total=2.4):
+              d = min(delay / total, 0.95)
+              e = min((delay + dur) / total, 1)
+              return '<animate attributeName="opacity" values="0;0;1" keyTimes="0;%.3f;%.3f" dur="%.1fs" begin="0s" fill="freeze"/>' % (d, e, total)
+
+
+          tiles = [("Public Repos", n_repos, "#58a6ff"), ("Total Stars", stars, "#e3b341"),
+                   ("Commits", commits, "#3fb950"), ("Pull Requests", prs, "#bc8cff"),
+                   ("Issues", issues, "#f85149"), ("Followers", followers, "#00B4D8")]
+          o.append('<text x="32" y="108" font-size="15" font-weight="600" fill="#c9d1d9">Overview</text>')
+          for i, (label, val, col) in enumerate(tiles):
+              c, r = i % 2, i // 2
+              x, y = 32 + c * 190, 120 + r * 62
+              o.append('<g opacity="1">%s<rect x="%d" y="%d" width="170" height="52" rx="10" fill="#161b22" stroke="#30363d"/>'
+                       '<rect x="%d" y="%d" width="4" height="32" rx="2" fill="%s"/>'
+                       '<text x="%d" y="%d" font-size="22" font-weight="700" fill="#f0f6fc">%s</text>'
+                       '<text x="%d" y="%d" font-size="12" fill="#8b949e">%s</text></g>'
+                       % (fade(0.15 * i), x, y, x + 10, y + 10, col, x + 24, y + 28, "{:,}".format(val), x + 24, y + 44, label))
+
+          o.append('<text x="430" y="108" font-size="15" font-weight="600" fill="#c9d1d9">Top Languages</text>')
+          if top and total:
+              for i, (name, b) in enumerate(top):
+                  pct = b * 100.0 / total
+                  col = COLORS.get(name, FALLBACK[i % len(FALLBACK)])
+                  y = 124 + i * 34
+                  bw = max(358 * pct / 100.0, 4)
+                  dl = 0.3 + 0.2 * i
+                  d = dl / 2.4
+                  o.append('<g opacity="1">%s<text x="430" y="%d" font-size="13" fill="#c9d1d9">%s</text>'
+                           '<text x="788" y="%d" font-size="13" fill="#8b949e" text-anchor="end">%.1f%%</text>'
+                           '<rect x="430" y="%d" width="358" height="8" rx="4" fill="#21262d"/>'
+                           '<rect x="430" y="%d" width="%.1f" height="8" rx="4" fill="%s">'
+                           '<animate attributeName="width" values="0;0;%.1f" keyTimes="0;%.3f;1" dur="2.4s" begin="0s" fill="freeze"/></rect></g>'
+                           % (fade(dl), y + 12, html.escape(name), y + 12, pct, y + 20, y + 20, bw, col, bw, d))
+          else:
+              o.append('<text x="430" y="150" font-size="13" fill="#8b949e">No code repositories yet.</text>'
+                       '<text x="430" y="172" font-size="13" fill="#8b949e">Languages appear after you push code.</text>')
+
+          o.append('<circle cx="40" cy="318" r="4" fill="#3fb950"/>'
+                   '<circle cx="40" cy="318" r="4" fill="none" stroke="#3fb950" stroke-width="1.5">'
+                   '<animate attributeName="r" values="4;10" dur="1.8s" repeatCount="indefinite"/>'
+                   '<animate attributeName="opacity" values=".8;0" dur="1.8s" repeatCount="indefinite"/></circle>'
+                   '<text x="56" y="322" font-size="11" fill="#8b949e">Live · auto-refreshes every 3 hours</text>')
+          o.append('</svg>')
+
+          os.makedirs("dist", exist_ok=True)
+          with open("dist/github-stats.svg", "w", encoding="utf-8") as f:
+              f.write("".join(o))
+          print("OK", n_repos, stars, commits, prs, issues, followers, top)
+          PY
 
       - name: push SVGs to the output branch
         uses: crazy-max/ghaction-github-pages@v3.1.0
