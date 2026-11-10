@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Snake · Rahul Singh</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--fg:#c9d1d9;--mut:#8b949e;--cell:#21262d;--acc:#00B4D8}
+@media (prefers-color-scheme:light){:root{--bg:#f6f8fa;--card:#fff;--line:#d0d7de;--fg:#24292f;--mut:#57606a;--cell:#ebedf0}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,Arial,sans-serif}
+main{max-width:620px;margin:0 auto;padding:24px 16px calc(24px + env(safe-area-inset-bottom));text-align:center}
+h1{margin:0 0 4px;font-size:28px;color:var(--acc)}
+.sub{margin:0 0 16px;color:var(--mut);font-size:14px}
+.stats{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 16px;font-size:12px;color:var(--mut)}
+.stats b{display:block;font-size:20px;color:var(--fg)}
+.board{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+canvas{display:block;width:min(88vw,560px);height:auto;aspect-ratio:7/5;touch-action:none;border-radius:8px}
+.pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,56px);gap:8px;justify-content:center;margin:16px auto 0}
+.pad button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;font-size:20px;cursor:pointer}
+.pad button:active{background:var(--acc);color:#fff}
+.pad .u{grid-column:2}
+@media (hover:hover) and (pointer:fine){.pad{display:none}}
+.hint{margin:14px 0 6px;color:var(--mut);font-size:13px}
+a{color:var(--acc);text-decoration:none;font-size:13px}
+</style>
+</head>
+<body>
+<main>
+  <h1>🐍 Contribution Snake</h1>
+  <p class="sub">Eat the green contributions, grow longer, don’t crash!</p>
+  <div class="stats">
+    <div>Score<b id="sc">0</b></div>
+    <div>Length<b id="ln">4</b></div>
+    <div>Best<b id="bs">0</b></div>
+  </div>
+  <div class="board"><canvas id="c" width="560" height="400"></canvas></div>
+  <div class="pad">
+    <button class="u" data-d="0,-1" aria-label="Up">▲</button>
+    <button data-d="-1,0" aria-label="Left">◀</button>
+    <button data-d="0,1" aria-label="Down">▼</button>
+    <button data-d="1,0" aria-label="Right">▶</button>
+  </div>
+  <p class="hint">Arrow keys / WASD to move · Space to pause · Swipe on mobile</p>
+  <a href="https://github.com/Rahul-DataAnalyst153">← Back to profile</a>
+</main>
+<script>
+const C=document.getElementById('c'),x=C.getContext('2d');
+const COLS=28,ROWS=20,S=20,PAD=2;
+const cellCol=getComputedStyle(document.documentElement).getPropertyValue('--cell').trim()||'#21262d';
+const GREENS=['#0e4429','#006d32','#26a641','#39d353'];
+let snake,dir,queue,foods,score,best=0,state='idle',timer;
+try{best=+localStorage.getItem('snakeBest')||0}catch(e){}
+const rnd=n=>Math.floor(Math.random()*n);
+const free=(a,b)=>!snake.some(s=>s.x===a&&s.y===b)&&!foods.some(f=>f.x===a&&f.y===b);
+function addFood(){let p;do{p={x:rnd(COLS),y:rnd(ROWS),c:GREENS[rnd(4)]}}while(!free(p.x,p.y));foods.push(p)}
+function hud(){document.getElementById('sc').textContent=score;document.getElementById('ln').textContent=snake.length;document.getElementById('bs').textContent=best}
+function reset(){snake=[{x:8,y:10},{x:7,y:10},{x:6,y:10},{x:5,y:10}];dir={x:1,y:0};queue=[];foods=[];score=0;while(foods.length<5)addFood();hud()}
+function rr(a,b,w,h,r,col){x.fillStyle=col;x.beginPath();x.roundRect(a,b,w,h,r);x.fill()}
+function draw(){
+  x.clearRect(0,0,C.width,C.height);
+  for(let i=0;i<COLS;i++)for(let j=0;j<ROWS;j++)rr(i*S+PAD,j*S+PAD,S-2*PAD,S-2*PAD,4,cellCol);
+  foods.forEach(f=>rr(f.x*S+PAD,f.y*S+PAD,S-2*PAD,S-2*PAD,4,f.c));
+  const n=snake.length;
+  for(let i=n-1;i>=0;i--){
+    const s=snake[i],sz=(S-2*PAD)*(1-0.35*(i/n)),o=(S-sz)/2;
+    rr(s.x*S+o,s.y*S+o,sz,sz,5,i===0?'#d08bff':'hsl(280,70%,'+(55-22*i/n)+'%)');
+  }
+  const h=snake[0],cx=h.x*S+S/2,cy=h.y*S+S/2,px=-dir.y,py=dir.x;
+  x.fillStyle='#fff';
+  [-1,1].forEach(m=>{x.beginPath();x.arc(cx+dir.x*3+px*4*m,cy+dir.y*3+py*4*m,2,0,7);x.fill()});
+  if(state!=='running'){
+    x.fillStyle='rgba(13,17,23,.78)';x.fillRect(0,0,C.width,C.height);
+    x.fillStyle='#fff';x.textAlign='center';
+    const T={idle:['Ready?','Arrow keys / WASD or swipe to start'],paused:['Paused','Press Space or tap to resume'],over:['Game Over','Score '+score+' · Space or tap to play again']}[state];
+    x.font='700 34px system-ui,Arial';x.fillText(T[0],C.width/2,C.height/2-8);
+    x.font='16px system-ui,Arial';x.fillStyle='#c9d1d9';x.fillText(T[1],C.width/2,C.height/2+24);
+  }
+}
+function step(){
+  if(queue.length)dir=queue.shift();
+  const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+  const fi=foods.findIndex(f=>f.x===h.x&&f.y===h.y);
+  const body=fi>=0?snake:snake.slice(0,-1);
+  if(h.x<0||h.y<0||h.x>=COLS||h.y>=ROWS||body.some(s=>s.x===h.x&&s.y===h.y)){state='over';clearTimeout(timer);draw();return}
+  snake.unshift(h);
+  if(fi>=0){
+    foods.splice(fi,1);score++;addFood();
+    if(score>best){best=score;try{localStorage.setItem('snakeBest',best)}catch(e){}}
+  }else snake.pop();
+  hud();draw();
+  timer=setTimeout(step,Math.max(70,140-score*3));
+}
+function start(){state='running';clearTimeout(timer);draw();timer=setTimeout(step,120)}
+function action(){
+  if(state==='over'){reset();start()}
+  else if(state==='running'){state='paused';clearTimeout(timer);draw()}
+  else start();
+}
+function turn(nx,ny){
+  if(state==='over')return;
+  const last=queue.length?queue[queue.length-1]:dir;
+  if((nx===-last.x&&ny===-last.y)||(nx===last.x&&ny===last.y))return;
+  if(queue.length<2)queue.push({x:nx,y:ny});
+  if(state!=='running')start();
+}
+const K={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]};
+document.addEventListener('keydown',e=>{
+  if(e.key===' '){e.preventDefault();action();return}
+  const k=K[e.key]||K[e.key.toLowerCase()];
+  if(k){e.preventDefault();turn(k[0],k[1])}
+});
+document.querySelectorAll('.pad button').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.d.split(',').map(Number);turn(d[0],d[1])}));
+let t0=null;
+C.addEventListener('touchstart',e=>{t0=e.touches[0];e.preventDefault()},{passive:false});
+C.addEventListener('touchend',e=>{
+  if(!t0)return;
+  const t=e.changedTouches[0],dx=t.clientX-t0.clientX,dy=t.clientY-t0.clientY;
+  if(Math.max(Math.abs(dx),Math.abs(dy))<24){if(state!=='running')action()}
+  else if(Math.abs(dx)>Math.abs(dy))turn(dx>0?1:-1,0);else turn(0,dy>0?1:-1);
+  t0=null;e.preventDefault();
+},{passive:false});
+C.addEventListener('click',()=>{if(state!=='running')action()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='running')action()});
+reset();draw();
+</script>
+</body>
+</html>
