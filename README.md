@@ -10,9 +10,13 @@
 
 <hr>
 
-<img src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/main/skills.svg" alt="Excel, Power BI, Power Query, Google Sheets, Apps Script" width="464" />
+<h3>🛠️ Skills</h3>
+
+<img src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/main/skills.svg" alt="Excel, Power BI, Power Query, Google Sheets, Apps Script" width="520" />
 
 <hr>
+
+<h3>👋 About Me</h3>
 
 <i>I'm an MIS Executive at KLJ Paraflex India Ltd., with hands-on experience in MIS reporting, dashboard development, KPI tracking and business reporting.</i>
 
@@ -54,6 +58,9 @@
 
 <div align="center">
 
+<h3>🎮 My Contribution Game</h3>
+
+<!-- Pac-Man -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/pacman-contribution-graph-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/pacman-contribution-graph.svg">
@@ -62,7 +69,32 @@
 
 </div>
 
-<h3>📊 My GitHub Stats:</h3>
+<details>
+  <summary>🕹️ <i>More games (Galaga &amp; Breakout)</i></summary>
+  <br>
+
+  <div align="center">
+
+  <!-- Galaga -->
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph.svg">
+    <img alt="Galaga contribution graph" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph.svg">
+  </picture>
+
+  <!-- Breakout -->
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph.svg">
+    <img alt="Breakout contribution graph" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph.svg">
+  </picture>
+
+  </div>
+</details>
+
+<br>
+
+<h3 align="center">📊 My GitHub Stats</h3>
 
 <p align="center">
   <img height="180" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Rahul-DataAnalyst153&theme=github_dark" alt="GitHub stats" />
@@ -74,5 +106,5 @@
 <h3 align="center"><i>Connect with me:</i></h3>
 
 <p align="center">
-<a href="https://linkedin.com/in/rahulsingh1508032004" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40" /></a>&nbsp;<a href="mailto:r4210707@gmail.com"><img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Gmail" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/rahulsingh1508032004" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="34" width="44" /></a>&nbsp;<a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=r4210707@gmail.com" target="_blank"><img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Gmail" height="34" width="44" /></a>
 </p>
