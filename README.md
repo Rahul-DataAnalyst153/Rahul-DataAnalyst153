@@ -102,61 +102,24 @@
 
 <br>
 
-<h3 align="center">🎮 Contribution Arcade</h3>
+<h3 align="center">🐍 Contribution Snake</h3>
 
-<p align="center"><i>My GitHub contributions, played as retro arcade games</i></p>
+<p align="center"><i>My GitHub contributions, eaten by a snake</i></p>
 
-<details open>
-  <summary><b>👻 Pac-Man</b></summary>
-  <br>
-
-  <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/pacman-contribution-graph-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/pacman-contribution-graph.svg">
-    <img alt="Pac-Man contribution graph" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/pacman-contribution-graph.svg">
-  </picture>
-  </div>
-</details>
-
-<details>
-  <summary><b>🚀 Galaga</b></summary>
-  <br>
-
-  <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph.svg">
-    <img alt="Galaga contribution graph" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/galaga-contribution-graph.svg">
-  </picture>
-  </div>
-</details>
-
-<details>
-  <summary><b>🧱 Breakout</b></summary>
-  <br>
-
-  <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph.svg">
-    <img alt="Breakout contribution graph" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/breakout-contribution-graph.svg">
-  </picture>
-  </div>
-</details>
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake.svg">
+  <img alt="Contribution snake animation" src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-snake.svg">
+</picture>
+</div>
 
 <br>
 
 <h3 align="center">📊 GitHub Analytics</h3>
 
 <p align="center">
-  <img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Rahul-DataAnalyst153&theme=github_dark" alt="Profile details" />
-  <img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Rahul-DataAnalyst153&theme=github_dark" alt="GitHub stats" />
-</p>
-
-<p align="center">
-  <img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Rahul-DataAnalyst153&theme=github_dark" alt="Most committed languages" />
-  <img height="190" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=Rahul-DataAnalyst153&theme=github_dark&utcOffset=5.5" alt="Productive time" />
+  <img src="https://raw.githubusercontent.com/Rahul-DataAnalyst153/Rahul-DataAnalyst153/output/github-stats.svg" alt="Live animated GitHub analytics" width="820" />
 </p>
 
 <hr>
