@@ -1,17 +1,17 @@
-<h1 align="center">Hi, I'm Rahul Singh</h1>
-<h3 align="center">An Entry-Level MIS Executive from India</h3>
+<h1 align="center">Hi 👋, I'm Rahul Singh</h1>
+<h3 align="center">MIS Executive | Aspiring Data Analyst</h3>
 
-- I’ve Completed My Training In **Excel, SQL, And Power Bi, And I’m Now Ready To Begin My Career As An Entry-level Mis Executive.**
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=rahul-dataanalyst153&label=Profile%20views&color=0e75b6&style=flat" alt="rahul-dataanalyst153" /> </p>
 
-- Ask me about **Data Cleaning, Reporting, And My Journey from Commerce to Mastering MIS tools like Excel, SQL & Power BI.**
+- 🔭 I’m currently working on **Reporting automation and KPI dashboards at KLJ Paraflex India Ltd. (MIS Executive)**
 
-- I’m looking to collaborate on **Data Cleaning, Reporting, And Creating Simple Dashboards.**
+- 🌱 I’m currently learning **MYSQL & Python**
 
-- I’m looking for help with **Real-world Excel Case Studies And Sample Datasets To Practice On.**
+- Latest project **Uber Business Performance Analysis (Power BI, Power Query)**
 
-- How to Reach me **rs4210707@gmail.com**
+- Ask me about **Advanced Excel, Power Query, Power BI, Google Sheets, Apps Script**
 
-- Fun fact **I Love Observing Trends In Data, And I Can Spend Hours Making Neat Spreadsheets Just For Fun.**
+- Fun fact **I turn messy business data into dashboards that people actually use 📊**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
@@ -19,10 +19,10 @@
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> </p>
+<p align="left"> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> </p>
 
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=rahul-misexecutive&show_icons=true&locale=en&layout=compact" alt="rahul-misexecutive" /></p>
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=rahul-dataanalyst153&show_icons=true&locale=en&layout=compact" alt="rahul-dataanalyst153" /></p>
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=rahul-misexecutive&show_icons=true&locale=en" alt="rahul-misexecutive" /></p>
+<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=rahul-dataanalyst153&show_icons=true&locale=en" alt="rahul-dataanalyst153" /></p>
 
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=rahul-misexecutive&" alt="rahul-misexecutive" /></p>
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=rahul-dataanalyst153&" alt="rahul-dataanalyst153" /></p>
